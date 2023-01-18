@@ -127,19 +127,19 @@ Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 			<td style="font-weight:bold;" colspan="4">2nd Service</td>
 		</tr>
 		<tr>
-			<td>Out Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.m2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.d2}></td>
+			<td>Out Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.y2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.m2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.d2}></td>
 		</tr>
 		<tr>
-			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.y2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.d1}></td>
+			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.d1}></td>
 		</tr>
 		<tr>
 			<td style="font-weight:bold;" colspan="4">3rd Service</td>
 		</tr>
 		<tr>
-			<td>Out Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.m2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.d2}></td>
+			<td>Out Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.y2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.m2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.d2}></td>
 		</tr>
 		<tr>
-			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.y2}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.d1}></td>
+			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.d1}></td>
 		</tr>
 		<tr>
 			<td>Total Years in Service</td><td class="dateInputCell"><b>{gapinsvc.years}</b></td><td class="dateInputCell"><b>{gapinsvc.months}</b></td><td class="dateInputCell"><b>{gapinsvc.days}</b></td>
