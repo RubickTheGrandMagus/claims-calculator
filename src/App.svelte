@@ -129,8 +129,9 @@
 
 <hr/>
 <h4>I. CREDITABLE YEARS IN SERVICE</h4>
-Date of Birth <input type="date" bind:value={birth}/> 
+Date of Birth <input type="date" bind:value={birth}/> <br>
 {#if !gapInSvc}
+	Type of Retirement
 	<select bind:value={retType} on:change={()=>changeDate()}>
 		<option value="">Select</option>
 		<option value="opt">Optional</option>
