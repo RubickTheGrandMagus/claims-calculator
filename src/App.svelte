@@ -3,8 +3,8 @@
 
 	//Calculate years in service
 		let gapInSvc = false; let gapD = {gap1:{y1:1998,m1:11,d1:16,y2:2008,m2:1,d2:1},gap2:{y1:2008,m1:2,d1:2,y2:2016,m2:12,d2:13},gap3:{y1:2018,m1:3,d1:26,y2:2020,m2:5,d2:26}};
-		let dor = {y:2022,m:6,d:15}; let des = {y:1990,m:4,d:16};
-		const yearsInSvc =(a,b)=>{
+		let dor = {y:2047,m:1,d:31}; let des = {y:2018,m:10,d:1}; let birth = '1990-05-27'; let retType = "";
+		const yearsInSvc =(a,b)=>{ //a is date entered; b is date retired
 			a = new Date(a); b = new Date(b);
 			let d1 = {yr:a.getFullYear(),mos:a.getMonth()+1,days:a.getDate()};
 			let d2 = {yr:b.getFullYear(),mos:b.getMonth()+1,days:b.getDate()};
@@ -37,8 +37,29 @@
 
 			return {years:sum.y,months:sum.m.r,days:sum.d.r};
 		}
+		const valiDate = a =>{
+			let b = yearsInSvc(a.dob,`${a.dor.y}-${a.dor.m}-${a.dor.d}`);
+			let c = yearsInSvc(a.dob,`${a.des.y}-${a.des.m}-${a.des.d}`);
+			let d = yearsInSvc(`${a.des.y}-${a.des.m}-${a.des.d}`,`${a.dor.y}-${a.dor.m}-${a.dor.d}`);
+			let f = {dorDays:((b.years*12+b.months)*30+b.days),dobDays56:(56*12*30),dobDays60:(60*12*30)};
+			
+			if(isNaN(c.years) || c.years<0) return {err:true,msg:"Invalid Date!"}
+			if(c.years<18 || c.years>35) return {err:true,msg:`Your age [${c.years}] doesn't qualify!`}
+			if(f.dorDays>f.dobDays56 && a.type=="com56") return {err:true,msg:`Your above compulsory retirement. [${b.years}]`}
+			if(f.dorDays>f.dobDays60 && a.type=="com60") return {err:true,msg:`Your above compulsory retirement. [${b.years}]`}
+			if(d.years<20) return {err:true,msg:"Years in service is below optional retirement"}
+			
+			return {err:false,msg:""}
+		}
+		const changeDate = () =>{
+			if(retType=="opt") return dor = {y:des.y+20,m:des.m,d:des.d}
+			let a = new Date(birth);
+			if(retType=="com56") return dor = {y:a.getFullYear()+56,m:a.getMonth()+1,d:a.getDate()}
+			if(retType=="com60") return dor = {y:a.getFullYear()+60,m:a.getMonth()+1,d:a.getDate()}
+		}
 		$:gapinsvc = gapInService(gapD);
 		$:yrsinsvc = yearsInSvc(`${des.y}-${des.m}-${des.d}`,`${dor.y}-${dor.m}-${dor.d}`);
+		$:errorMsg = valiDate({dob:birth,des:des,dor:dor,type:retType});
 	//end of function
 	
 	//calculate highest salary received
@@ -108,6 +129,19 @@
 
 <hr/>
 <h4>I. CREDITABLE YEARS IN SERVICE</h4>
+Date of Birth <input type="date" bind:value={birth}/> 
+{#if !gapInSvc}
+	<select bind:value={retType} on:change={()=>changeDate()}>
+		<option value="">Select</option>
+		<option value="opt">Optional</option>
+		<option value="com56">Compulsory 56</option>
+		<option value="com60">Compulsory 60</option>
+	</select> <br/>
+	{#if errorMsg.err}
+		<i style="font-size: small;color:red;">{errorMsg.msg}</i>
+	{/if}
+{/if}
+<br/>
 Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 <table>
 	<tr>
@@ -243,6 +277,7 @@ Rank:
 	Total Leave Benefits = <b>₱ {money(hsr.hsr)}</b> x <b>{computeleave.total.toFixed(3)}</b> x <b>0.0481927</b> = <b>₱ {money((parseFloat(hsr.hsr)*computeleave.total*0.0481927).toFixed(2))}</b>
 </p>
 {/if}
+<span>Copyright CSUPT FRANCIS CHARLES T SAMSON - Retirements Claims Calculator v1.1</span> 
 <style>
 	.dateInputs{
 		width:70px;
@@ -257,5 +292,8 @@ Rank:
 		border:0;
 		background-color:green;
 		color:white;
+	}
+	span{
+		font-size: x-small;
 	}
 </style>
