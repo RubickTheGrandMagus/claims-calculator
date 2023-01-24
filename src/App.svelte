@@ -2,8 +2,8 @@
 	let claimType = "gratuity";
 
 	//Calculate years in service
-		let gapInSvc = false; let gapD = {gap1:{y1:1998,m1:11,d1:16,y2:2008,m2:1,d2:1},gap2:{y1:2008,m1:2,d1:2,y2:2016,m2:12,d2:13},gap3:{y1:2018,m1:3,d1:26,y2:2020,m2:5,d2:26}};
-		let dor = {y:2047,m:1,d:31}; let des = {y:2018,m:10,d:1}; let birth = '1990-05-27'; let retType = "";
+		let gapInSvc = true; let gapD = {gap1:{y1:1998,m1:11,d1:16,y2:2008,m2:1,d2:1},gap2:{y1:2008,m1:2,d1:2,y2:2016,m2:12,d2:13},gap3:{y1:2018,m1:3,d1:26,y2:2020,m2:5,d2:26}};
+		let dor = {y:0,m:0,d:0}; let des = {y:0,m:0,d:0}; let birth = '1990-05-27'; let retType = "";
 		const yearsInSvc =(a,b)=>{ //a is date entered; b is date retired
 			a = new Date(a); b = new Date(b);
 			let d1 = {yr:a.getFullYear(),mos:a.getMonth()+1,days:a.getDate()};
@@ -31,8 +31,8 @@
 			if(isNaN(d.years)) d = {years:0,months:0,days:0}
 
 			let sum = {y:0,m:{t:0,r:0},d:{t:0,r:0}};
-			sum.d.t = b.days + c.days + d.days; sum.d.r = (sum.d.t>30)? (sum.d.t%30):sum.d.t;
-			sum.m.t = b.months + c.months + d.months + Math.floor(sum.d.t/30); sum.m.r = (sum.m.t>12)? (sum.m.t%12):sum.m.t;
+			sum.d.t = b.days + c.days + d.days; sum.d.r = (sum.d.t>=30)? (sum.d.t%30):sum.d.t;
+			sum.m.t = b.months + c.months + d.months + Math.floor(sum.d.t/30); sum.m.r = (sum.m.t>=12)? (sum.m.t%12):sum.m.t;
 			sum.y = b.years + c.years + d.years + Math.floor(sum.m.t/12);
 
 			return {years:sum.y,months:sum.m.r,days:sum.d.r};
@@ -127,7 +127,7 @@
 <input type="radio" value="terminal" bind:group={claimType}> Terminal
 <br/>
 
-<hr/>
+<hr/>	
 <h4>I. CREDITABLE YEARS IN SERVICE</h4>
 Date of Birth <input type="date" bind:value={birth}/> <br>
 {#if !gapInSvc}
@@ -158,6 +158,9 @@ Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 		<tr>
 			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap1.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap1.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap1.d1}></td>
 		</tr>
+		<tr class="gapYearsTotal">
+			<td>Total</td><td>{yearsInSvc(`${gapD.gap1.y1}-${gapD.gap1.m1}-${gapD.gap1.d1}`,`${gapD.gap1.y2}-${gapD.gap1.m2}-${gapD.gap1.d2}`).years}</td><td>{yearsInSvc(`${gapD.gap1.y1}-${gapD.gap1.m1}-${gapD.gap1.d1}`,`${gapD.gap1.y2}-${gapD.gap1.m2}-${gapD.gap1.d2}`).months}</td><td>{yearsInSvc(`${gapD.gap1.y1}-${gapD.gap1.m1}-${gapD.gap1.d1}`,`${gapD.gap1.y2}-${gapD.gap1.m2}-${gapD.gap1.d2}`).days}</td>
+		</tr>
 		<tr>
 			<td style="font-weight:bold;" colspan="4">2nd Service</td>
 		</tr>
@@ -167,6 +170,9 @@ Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 		<tr>
 			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap2.d1}></td>
 		</tr>
+		<tr class="gapYearsTotal">
+			<td>Total</td><td>{yearsInSvc(`${gapD.gap2.y1}-${gapD.gap2.m1}-${gapD.gap2.d1}`,`${gapD.gap2.y2}-${gapD.gap2.m2}-${gapD.gap2.d2}`).years}</td><td>{yearsInSvc(`${gapD.gap2.y1}-${gapD.gap2.m1}-${gapD.gap2.d1}`,`${gapD.gap2.y2}-${gapD.gap2.m2}-${gapD.gap2.d2}`).months}</td><td>{yearsInSvc(`${gapD.gap2.y1}-${gapD.gap2.m1}-${gapD.gap2.d1}`,`${gapD.gap2.y2}-${gapD.gap2.m2}-${gapD.gap2.d2}`).days}</td>
+		</tr>
 		<tr>
 			<td style="font-weight:bold;" colspan="4">3rd Service</td>
 		</tr>
@@ -175,6 +181,9 @@ Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 		</tr>
 		<tr>
 			<td>In Service</td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.y1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.m1}></td><td><input class="dateInputs" type="number" bind:value={gapD.gap3.d1}></td>
+		</tr>
+		<tr class="gapYearsTotal">
+			<td>Total</td><td>{yearsInSvc(`${gapD.gap3.y1}-${gapD.gap3.m1}-${gapD.gap3.d1}`,`${gapD.gap3.y2}-${gapD.gap3.m2}-${gapD.gap3.d2}`).years}</td><td>{yearsInSvc(`${gapD.gap3.y1}-${gapD.gap3.m1}-${gapD.gap3.d1}`,`${gapD.gap3.y2}-${gapD.gap3.m2}-${gapD.gap3.d2}`).months}</td><td>{yearsInSvc(`${gapD.gap3.y1}-${gapD.gap3.m1}-${gapD.gap3.d1}`,`${gapD.gap3.y2}-${gapD.gap3.m2}-${gapD.gap3.d2}`).days}</td>
 		</tr>
 		<tr>
 			<td>Total Years in Service</td><td class="dateInputCell"><b>{gapinsvc.years}</b></td><td class="dateInputCell"><b>{gapinsvc.months}</b></td><td class="dateInputCell"><b>{gapinsvc.days}</b></td>
@@ -286,6 +295,7 @@ Rank:
 	}
 	.dateInputCell{
 		text-align:center;
+		border-top:1px solid black;
 	}
 	.leaveInputs{
 		width:100px;
@@ -296,5 +306,10 @@ Rank:
 	}
 	span{
 		font-size: x-small;
+	}
+	.gapYearsTotal td:not(:first-child){
+		text-align: center;
+		font-size: smaller;
+		font-weight: bold;
 	}
 </style>
