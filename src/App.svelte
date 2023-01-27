@@ -287,7 +287,7 @@ Rank:
 	Total Leave Benefits = <b>₱ {money(hsr.hsr)}</b> x <b>{computeleave.total.toFixed(3)}</b> x <b>0.0481927</b> = <b>₱ {money((parseFloat(hsr.hsr)*computeleave.total*0.0481927).toFixed(2))}</b>
 </p>
 {/if}
-<span>Copyright CSUPT FRANCIS CHARLES T SAMSON - Retirements Claims Calculator v1.1</span> 
+<span>Copyright ITCU 7 - Retirements Claims Calculator v1.1</span> 
 <style>
 	.dateInputs{
 		width:70px;
