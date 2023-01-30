@@ -92,7 +92,7 @@
 	
 	//function for computation of total rate
 		const computeTotalRate = a =>{
-			let total = (a.years*2.5) + ((a.months*2.5)/12) + ((a.days*2.5)/360);
+			let total = parseFloat((a.years*2.5).toFixed(5)) + parseFloat(((a.months*2.5)/12).toFixed(5)) + parseFloat(((a.days*2.5)/360).toFixed(5));
 			return {rateYr:(a.years*2.5),rateMos:((a.months*2.5)/12),rateDays:((a.days*2.5)/360),rateTotal:total}
 		}
 		$:computetotalrate = computeTotalRate((gapInSvc)? gapinsvc:yearsInSvc(`${des.y}-${des.m}-${des.d}`,`${dor.y}-${dor.m}-${dor.d}`));
@@ -287,7 +287,7 @@ Rank:
 	Total Leave Benefits = <b>₱ {money(hsr.hsr)}</b> x <b>{computeleave.total.toFixed(3)}</b> x <b>0.0481927</b> = <b>₱ {money((parseFloat(hsr.hsr)*computeleave.total*0.0481927).toFixed(2))}</b>
 </p>
 {/if}
-<span>Copyright ITCU 7 - Retirements Claims Calculator v1.1</span> 
+<span>Copyright ITCU 7 - Retirements Claims Calculator v1.5</span> 
 <style>
 	.dateInputs{
 		width:70px;
